@@ -14,18 +14,18 @@ namespace TSP.GA.Model
         private readonly Random _random;
         private List<Path> _paths;
 
+        public Population(List<Point> path, int populationsize, int randomSeed)
+        {
+            _random = new Random(randomSeed);
+            _paths = CreatePopulation(path, populationsize).OrderBy(x => x.Length).ToList();
+        }
+
         public Path Best
         {
             get
             {
                 return _paths.First();
             }
-        }
-
-        public Population(List<Point> path, int populationsize, int randomSeed)
-        {
-            _random = new Random(randomSeed);
-            _paths = CreatePopulation(path, populationsize).OrderBy(x => x.Length).ToList();
         }
 
         private List<Path> CreatePopulation(List<Point> path, int populationsize)

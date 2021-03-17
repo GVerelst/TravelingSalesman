@@ -23,7 +23,7 @@ namespace TSP.WPF.Model
         private int _iterations = 2000;
         private int _randomSeed = 0;
 
-        private List<System.Drawing.Point> _path = new List<System.Drawing.Point>();
+        private readonly List<System.Drawing.Point> _path = new List<System.Drawing.Point>();
         private string _status = "Ready.";
         private string _ellapsed;
         private int _bestDistance;
@@ -39,10 +39,10 @@ namespace TSP.WPF.Model
             _worker.DoWork += Worker_DoWork;
             _worker.ProgressChanged += Worker_ProgressChanged;
             _worker.WorkerReportsProgress = true;
-            _worker.RunWorkerCompleted += _worker_RunWorkerCompleted;
+            _worker.RunWorkerCompleted += Worker_RunWorkerCompleted;
         }
 
-        private void _worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void Worker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             _isBusy = false;
             Status = "Ready.";
@@ -182,7 +182,7 @@ namespace TSP.WPF.Model
             }
         }
 
-        private async Task Start()
+        private void Start()
         {
             _isBusy = true;
             _started = DateTime.Now;
@@ -215,11 +215,7 @@ namespace TSP.WPF.Model
         private void RaisePropertyChanged(string propertyName)
         {
             // take a copy to prevent thread issues
-            PropertyChangedEventHandler handler = PropertyChanged;
-            if (handler != null)
-            {
-                handler(this, new PropertyChangedEventArgs(propertyName));
-            }
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         public void Dispose()
