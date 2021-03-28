@@ -4,6 +4,8 @@
     <OutputType>WinExe</OutputType>
     <TargetFramework>net6.0-windows</TargetFramework>
     <UseWPF>true</UseWPF>
+    <Authors>Gaston Verelst</Authors>
+    <Company>Faq.be bvba</Company>
   </PropertyGroup>
 
   <ItemGroup>
